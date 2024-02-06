@@ -61,8 +61,8 @@ const HomePage = () => {
     <div className="bg-white">
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
         {myAllUsers ? (
-          myAllUsers.map((userData: any) => (
-            <div>
+          myAllUsers.map((userData: any, index: any) => (
+            <div key={index}>
               <h2>{userData.username}</h2>
             </div>
           ))
@@ -72,8 +72,11 @@ const HomePage = () => {
           </div>
         )}
         {myNewProducts ? (
-          myNewProducts.map((data: any) => (
-            <div className="bg-white border-gray-500 md:px-4 gap-4 flex flex-col justify-center items-center">
+          myNewProducts.map((data: any, index: any) => (
+            <div
+              key={index}
+              className="bg-white border-gray-500 md:px-4 gap-4 flex flex-col justify-center items-center"
+            >
               <h2 className="">{data.title.slice(0, 20)}</h2>
               <Image
                 src={data.image}
