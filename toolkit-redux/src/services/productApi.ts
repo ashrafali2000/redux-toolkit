@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const api = axios.create({
+const productApi = axios.create({
   baseURL: "https://fakestoreapi.com",
 });
 
-export const fetchData = async (): Promise<string> => {
+export const fetchProducts = async (): Promise<string> => {
   try {
-    const response = await api.get("/products");
+    const response = await productApi.get("/products");
     return response.data;
   } catch (error) {
     throw error;

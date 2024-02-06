@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { fetchData as fetchDataService } from "../../services/api";
+import { fetchUsers as fetchUsersService } from "../../services/userApi";
 
 interface ApiState {
   data: string | null;
@@ -13,30 +13,34 @@ const initialState: ApiState = {
   error: null,
 };
 
-export const fetchData = createAsyncThunk("api/fetchData", async () => {
-  const data = await fetchDataService();
-  return data;
+export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
+  try {
+    const data = await fetchUsersService();
+    return data;
+  } catch (err: any) {
+    return err.message;
+  }
 });
 
-const apiSlice = createSlice({
-  name: "api",
+const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.pending, (state) => {
+      .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchData.fulfilled, (state, action: PayloadAction<string>) => {
+      .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<string>) => {
         state.loading = false;
         state.data = action.payload;
       })
-      .addCase(fetchData.rejected, (state, action) => {
+      .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "An error occurred";
       });
   },
 });
 
-export default apiSlice.reducer;
+export default userSlice.reducer;
